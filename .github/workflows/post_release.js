@@ -57,7 +57,7 @@ const notifyRelease = async ({
 		repository: context.repo.repo,
 	});
 
-	issues.forEach((issue) => {
+	issues.forEach(async (issue) => {
 		console.info(`Updating issue number ${issue.number}`);
 
 		const comment = `This is now released under [${release_version}](${release_url}) version!`;
