@@ -20,8 +20,8 @@ jobs:
         RELEASE_TAG_VERSION=${{ github.event.inputs.release }}
         echo "RELEASE_TAG_VERSION=${RELEASE_TAG_VERSION:1}" >> $GITHUB_ENV
     - name: Close staged release issues
-    - uses: actions/github-script@v5
-      with:
-        script: |
-          const post_release = require('.github/workflows/post_release.js')
-          await post_release({github, context, core})
+      uses: actions/github-script@v5
+        with:
+          script: |
+            const post_release = require('.github/workflows/post_release.js')
+            await post_release({github, context, core})
