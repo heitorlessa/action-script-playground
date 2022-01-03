@@ -65,8 +65,8 @@ const notifyRelease = async ({
 			await gh_client.rest.issues.createComment({
 				owner,
 				repository,
-				issue_number,
 				comment,
+				issue_number: issue.number,
 			});
 		} catch (error) {
 			console.error(error);
