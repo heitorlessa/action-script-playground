@@ -52,7 +52,7 @@ const notifyRelease = async ({
 	const release_url = `https://github.com/${owner}/${repository}/releases/tag/v${release_version}`;
 
 	const issues = await fetchIssues({
-		gh_client: github,
+		gh_client: gh_client,
 		org: context.repo.owner,
 		repository: context.repo.repo,
 	});
