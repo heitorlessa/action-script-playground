@@ -1,0 +1,27 @@
+name: Kickoff action script
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: release version
+        default: 'v1.24.0'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Set release notes tag
+      run: |
+        RELEASE_TAG_VERSION=${{ github.event.inputs.release }}
+        echo "RELEASE_TAG_VERSION=${RELEASE_TAG_VERSION:1}" >> $GITHUB_ENV
+    - name: Close staged release issues
+    - uses: actions/github-script@v5
+      with:
+        script: |
+          const post_release = require('.github/workflows/post_release.js')
+          await post_release({github, context, core})
