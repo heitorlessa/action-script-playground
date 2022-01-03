@@ -63,9 +63,9 @@ const notifyRelease = async ({
 		const comment = `This is now released under [${release_version}](${release_url}) version!`;
 		try {
 			await gh_client.rest.issues.createComment({
-				owner,
-				repository,
-				comment,
+				owner: owner,
+				repo: repository,
+				body: comment,
 				issue_number: issue.number,
 			});
 		} catch (error) {
