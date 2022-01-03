@@ -53,8 +53,8 @@ const notifyRelease = async ({
 
 	const issues = await fetchIssues({
 		gh_client: gh_client,
-		org: context.repo.owner,
-		repository: context.repo.repo,
+		org: owner,
+		repository: repository,
 	});
 
 	issues.forEach(async (issue) => {
