@@ -105,7 +105,6 @@ module.exports = async ({ github, context, core }) => {
 
 	await notifyRelease({
 		gh_client: github,
-		issues: issues,
 		owner: context.repo.owner,
 		repository: context.repo.repo,
 		release_version: RELEASE_TAG_VERSION,
