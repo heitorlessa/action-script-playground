@@ -100,7 +100,6 @@ const notifyRelease = async ({
 // context: https://github.com/actions/toolkit/blob/main/packages/github/src/context.ts
 // core: https://github.com/actions/toolkit/tree/main/packages/core
 module.exports = async ({ github, context, core }) => {
-	core.exportVariable("author", commit.data.commit.author.email);
 	const { RELEASE_TAG_VERSION } = process.env;
 	console.log(`Running post-release script for ${RELEASE_TAG_VERSION} version`);
 
