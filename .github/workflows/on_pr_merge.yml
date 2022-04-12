@@ -41,7 +41,7 @@ jobs:
               }
             }`;
             const variables = {
-              url: ${{ github.event.pull_request.url }},
+              url: context.payload.pull_request.url,
             }
             const result = await github.graphql(query, variables)
             console.log(result)
