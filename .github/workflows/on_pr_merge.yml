@@ -26,4 +26,5 @@ jobs:
           url: ${{ github.event.pull_request.url }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo 'latest release: ${{ steps.get_linked_issues.outputs.data }}'"
+      - run: "echo 'output: ${{ steps.get_linked_issues.outputs }}'"
+      - run: "echo 'linked issues: ${{ steps.get_linked_issues.outputs.data }}'"
