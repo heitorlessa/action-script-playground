@@ -12,7 +12,7 @@ jobs:
         id: get_linked_issues
         with:
           query: |
-            query linkedIssues($url:URI!) {
+            query linkedIssues($url:String!) {
               resource(url:$url) {
                 ... on PullRequest {
                   closingIssuesReferences(first: 10) {
@@ -26,11 +26,30 @@ jobs:
           url: ${{ github.event.pull_request.url }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const query = `query linkedIssues($url:URI!) {
+              resource(url:$url) {
+                ... on PullRequest {
+                  closingIssuesReferences(first: 10) {
+                    nodes {
+                      number
+                    }
+                  }
+                }
+              }
+            }`;
+            const variables = {
+              url: ${{ github.event.pull_request.url }},
+            }
+            const result = await github.graphql(query, variables)
+            console.log(result)
       - name: 'Log object'
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(context.payload.pull_request._links)
             console.log(context)
+            console.log(context.job)
       - run: "echo 'output: ${{ steps.get_linked_issues.outputs }}'"
       - run: "echo 'linked issues: ${{ steps.get_linked_issues.outputs.data }}'"
