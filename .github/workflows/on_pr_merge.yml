@@ -29,8 +29,8 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const query = `query linkedIssues($url:URI!) {
-              resource(url:$url) {
+            const query = `query linkedIssues($pr:URI!) {
+              resource(url:$pr) {
                 ... on PullRequest {
                   closingIssuesReferences(first: 10) {
                     nodes {
@@ -41,7 +41,7 @@ jobs:
               }
             }`;
             const variables = {
-              url: context.payload.pull_request.url,
+              pr: context.payload.pull_request.url,
             }
             const result = await github.graphql(query, variables)
             console.log(result)
