@@ -12,7 +12,7 @@ jobs:
         id: get_linked_issues
         with:
           query: |
-            query linkedIssues($url:String!) {
+            query linkedIssues($url:URI!) {
               resource(url:$url) {
                 ... on PullRequest {
                   closingIssuesReferences(first: 10) {
