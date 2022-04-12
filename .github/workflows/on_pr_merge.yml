@@ -26,5 +26,11 @@ jobs:
           url: ${{ github.event.pull_request.url }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: 'Log object'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(context)
+            console.log(context.job)
       - run: "echo 'output: ${{ steps.get_linked_issues.outputs }}'"
       - run: "echo 'linked issues: ${{ steps.get_linked_issues.outputs.data }}'"
