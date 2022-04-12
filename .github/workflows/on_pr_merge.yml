@@ -1,0 +1,29 @@
+name: Label linked PR on merge
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  labelLinkedPrIssues:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/graphql-action@v2.x
+        id: get_linked_issues
+        with:
+          query: |
+            query linkedIssues($url:String!) {
+              resource(url:$url) {
+                ... on PullRequest {
+                  closingIssuesReferences(first: 10) {
+                    nodes {
+                      number
+                    }
+                  }
+                }
+              }
+            }
+          url: ${{ github.event.pull_request.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: "echo 'latest release: ${{ steps.get_linked_issues.outputs.data }}'"
