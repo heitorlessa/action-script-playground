@@ -29,8 +29,8 @@ jobs:
             }`;
 
             const variables = {
-              org: process.env.org,
-              team: process.env.team
+              org: process.env.ORG,
+              team: process.env.TEAM
             };
 
             const result = await github.graphql(query, variables);
