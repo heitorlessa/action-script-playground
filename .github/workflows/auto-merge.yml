@@ -11,28 +11,30 @@ jobs:
   maintainers:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest list of maintainers
-        run: |
-          MAINTAINERS=$(gh api graphql \
-            -F org='awslabs' \
-            -F team='aws-lambda-powertools-python' \
-            -f query='
-                query($org: String!, $team: String!) { 
-                    organization(login:$org) {
-                        team(slug:$team) {
-                            members {
-                                edges {
-                                    node {
-                                        login
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            ') 
-            echo 'MAINTAINERS='$MAINTAINERS >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const query = `query($org: String!, $team: String!) { 
+              organization(login:$org) {
+                  team(slug:$team) {
+                      members {
+                          edges {
+                              node {
+                                  login
+                              }
+                          }
+                      }
+                  }
+              }
+            }`;
+
+            const variables = {
+              org: process.env.org,
+              team: process.env.team
+            };
+
+            const result = await github.graphql(query, variables);
+            console.log(result);
+            core.exportVariable('MAINTAINERS', result);
       - name: List maintainers
         run: echo $MAINTAINERS
