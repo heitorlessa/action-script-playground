@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.PAT }}
           script: |
             const query = `query($org: String!, $team: String!) { 
               organization(login:$org) {
