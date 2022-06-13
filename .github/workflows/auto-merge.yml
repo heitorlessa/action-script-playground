@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Get latest list of maintainers
         run: |
-          gh api graphql \
+          MAINTAINERS=$(gh api graphql \
             -F org='awslabs' \
             -F team='aws-lambda-powertools-python' \
             -f query='
@@ -30,8 +30,7 @@ jobs:
                         }
                     }
                 }
-            ' > data.json
-            cat data.json
+            ') 
             echo 'MAINTAINERS='$MAINTAINERS >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
