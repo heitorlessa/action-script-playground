@@ -9,6 +9,7 @@ env:
 
 jobs:
   maintainers:
+    runs-on: ubuntu-latest
     steps:
       - name: Get latest list of maintainers
         run: |
