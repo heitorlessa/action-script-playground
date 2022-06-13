@@ -1,0 +1,36 @@
+name: auto-merge
+
+on:
+  workflow_dispatch:
+
+env:
+  ORG: "awslabs"
+  TEAM: "aws-lambda-powertools-python"
+
+jobs:
+  maintainers:
+    steps:
+      - name: Get latest list of maintainers
+        run: |
+          gh api graphql \
+            -F org=$ORG \
+            -F team=$TEAM \
+            -f query='
+                query($org: String!, $team: String!) { 
+                    organization(login:$org) {
+                        team(slug:$team) {
+                            members {
+                                edges {
+                                    node {
+                                        login
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ' > data.json
+            MAINTAINERS=$(jq -c '.data.organization.team.members.edges | map(.node.login)' data.json)
+            echo 'MAINTAINERS='$MAINTAINERS >> $GITHUB_ENV
+      - name: List maintainers
+        run: echo $MAINTAINERS
