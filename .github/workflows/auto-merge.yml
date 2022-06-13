@@ -11,8 +11,6 @@ jobs:
   maintainers:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: Get latest list of maintainers
         run: |
           gh api graphql \
@@ -34,9 +32,8 @@ jobs:
                 }
             ' > data.json
             cat data.json
-            MAINTAINERS=$(jq -c '.data.organization.team.members.edges | map(.node.login)' data.json)
             echo 'MAINTAINERS='$MAINTAINERS >> $GITHUB_ENV
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: List maintainers
-        run: echo $MAINTAINERS
+      # - name: List maintainers
+      #   run: echo $MAINTAINERS
