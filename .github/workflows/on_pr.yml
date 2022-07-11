@@ -10,17 +10,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Save PR number
-        run: |
-          mkdir -p ./pr
-          echo ${{ github.event.number }} > ./pr/number
-          echo "${{ github.event.pull_request.title }}" > ./pr/title
-          echo "${{ github.event.pull_request.body }}" > ./pr/body
-          echo "${{ github.event.pull_request.user.login }}" > ./pr/author
-          echo "${{ github.event.action }}" > ./pr/action
-          echo "${{ github.event.pull_request }}" > ./pr/event
-          echo "${{ github.event }}" > ./pr/raw
+      - name: "Extract PR details"
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('.github/scripts/export_pr_details.js')
+            script({github, context, core})
       - uses: actions/upload-artifact@v3
         with:
           name: pr
-          path: pr/
+          path: pr.txt
