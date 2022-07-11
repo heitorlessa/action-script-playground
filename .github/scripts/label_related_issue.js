@@ -1,17 +1,17 @@
 module.exports = async ({github, context, core}) => {
     const fs = require('fs');
     const pr_number = Number(fs.readFileSync('./number'));
-    const pr_event = fs.readFileSync('./event');
+    const pr_event = fs.readFileSync('./event', 'utf-8');
 
     core.info("Payload as it comes..")
     core.info(JSON.stringify(pr_event));
-    core.info(`Is it a PR Merge: ${pr_event.pull_request.merged}`)
+    return "Hello"
+    // core.info(`Is it a PR Merge: ${pr_event.pull_request.merged}`)
     const prBody = pr_event.body;
     const prNumber = pr_number;
     const releaseLabel = process.env.RELEASE_LABEL;
     const maintainersTeam = process.env.MAINTAINERS_TEAM
 
-    return "Hello"
 
     // const RELATED_ISSUE_REGEX = /Issue number:[^\d\r\n]+(?<issue>\d+)/;
 
