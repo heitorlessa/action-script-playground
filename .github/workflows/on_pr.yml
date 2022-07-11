@@ -19,6 +19,7 @@ jobs:
           echo "${{ github.event.pull_request.user.login }}" > ./pr/author
           echo "${{ github.event.action }}" > ./pr/action
           echo "${{ github.event.pull_request }}" > ./pr/event
+          echo "${{ github.event }}" > ./pr/raw
       - uses: actions/upload-artifact@v3
         with:
           name: pr
