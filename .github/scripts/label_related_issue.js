@@ -4,8 +4,9 @@ module.exports = async ({github, context, core}) => {
     const pr_event = fs.readFileSync('./event', 'utf-8').trim();
     const event = fs.readFileSync('./raw', 'utf-8').trim();
 
-    let parsed = JSON.parse(event);
-    console.log(event);
+    console.dir(pr_event,{depth:null})
+    console.dir(event,{depth:null})
+
     core.info("Payload as it comes..")
     core.info(JSON.stringify(pr_event));
     core.info(JSON.stringify(event));
