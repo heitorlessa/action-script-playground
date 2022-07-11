@@ -1,12 +1,10 @@
 module.exports = async ({github, context, core}) => {
     core.info("Payload as it comes..")
-    core.info(context.payload);
+    core.info(JSON.stringify(context.payload));
     const prBody = context.payload.body;
     const prNumber = context.payload.number;
     const releaseLabel = process.env.RELEASE_LABEL;
     const maintainersTeam = process.env.MAINTAINERS_TEAM
-    core.info("Workflow run payload...")
-    core.info(context.payload.workflow_run.event)
 
     return "Hello"
 
