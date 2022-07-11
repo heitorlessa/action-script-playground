@@ -20,6 +20,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: "Download artifact"
+        uses: actions/github-script@v6
+        # For security, we only download artifacts tied to the successful PR recording workflow
+        with:
+          script: |
+            const fs = require('fs');
+
+            const artifacts = await github.rest.actions.listWorkflowRunArtifacts({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               run_id: ${{github.event.workflow_run.id }},
+            });
+
+            const matchArtifact = artifacts.data.artifacts.filter(artifact => artifact.name == "pr")[0];
+
+            const artifact = await github.rest.actions.downloadArtifact({
+               owner: context.repo.owner,
+               repo: context.repo.repo,
+               artifact_id: matchArtifact.id,
+               archive_format: 'zip',
+            });
+
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(artifact.data));
+      # NodeJS standard library doesn't provide ZIP capabilities; use system `unzip` command instead
+      - run: unzip pr.zip
       - name: "Label PR related issue for release"
         uses: actions/github-script@v6
         with:
