@@ -1,7 +1,7 @@
 module.exports = async ({github, context, core}) => {
     const fs = require('fs');
     const pr_number = Number(fs.readFileSync('./number'));
-    const pr_event = JSON.parse(fs.readFileSync('./event'))
+    const pr_event = fs.readFileSync('./event');
 
     core.info(`Is it a PR Merge: ${pr_event.pull_request.merged}`)
     core.info("Payload as it comes..")
