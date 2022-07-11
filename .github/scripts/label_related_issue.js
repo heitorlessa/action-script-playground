@@ -6,8 +6,8 @@ module.exports = async ({github, context, core}) => {
     core.info("Payload as it comes..")
     core.info(JSON.stringify(pr));
 
-    const query = `query linkedIssues($url:URI!) {
-        resource(url:$url) {
+    const query = `query linkedIssues($pr:URI!) {
+        resource(url:$pr) {
           ... on PullRequest {
             closingIssuesReferences(first: 10) {
               nodes {
@@ -17,8 +17,8 @@ module.exports = async ({github, context, core}) => {
           }
         }
     }`;
-    
-    let variables = {url: "https://github.com/heitorlessa/action-script-playground/pull/20"}
+
+    let variables = {pr: "https://github.com/heitorlessa/action-script-playground/pull/20"}
     const result = await github.graphql(query, variables)
     console.dir(result,{depth:null})
 
