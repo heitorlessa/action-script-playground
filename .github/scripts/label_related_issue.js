@@ -1,9 +1,11 @@
 module.exports = async ({github, context, core}) => {
     const fs = require('fs');
     const pr_number = Number(fs.readFileSync('./number'));
-    const pr_event = fs.readFileSync('./event', 'utf-8');
-    const event = fs.readFileSync('./raw', 'utf-8');
+    const pr_event = fs.readFileSync('./event', 'utf-8').trim();
+    const event = fs.readFileSync('./raw', 'utf-8').trim();
 
+    let parsed = JSON.parse(event);
+    console.log(event);
     core.info("Payload as it comes..")
     core.info(JSON.stringify(pr_event));
     core.info(JSON.stringify(event));
