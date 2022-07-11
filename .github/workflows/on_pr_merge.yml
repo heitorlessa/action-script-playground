@@ -1,55 +1,29 @@
-name: Label linked PR on merge
+# Maintenance: Verify why we're having permissions issues even with write scope, then re-enable it.
+# logs: https://github.com/awslabs/aws-lambda-powertools-python/runs/7030238348?check_suite_focus=true
+
 on:
-  pull_request:
-    types: [closed]
+  workflow_run:
+    workflows: ["Record PR number"]
+    types:
+      - completed
+
+env:
+  RELEASE_LABEL: "pending-release"
+  MAINTAINERS_TEAM: "@awslabs/aws-lambda-powertools-python"
 
 jobs:
-  labelLinkedPrIssues:
-    if: github.event.pull_request.merged == true
+  release_label_on_merge:
+    if: >
+      ${{ github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' }}
+    # if: github.event.pull_request.merged == true && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
-      - uses: octokit/graphql-action@v2.x
-        id: get_linked_issues
-        with:
-          query: |
-            query linkedIssues($url:String!) {
-              resource(url:$url) {
-                ... on PullRequest {
-                  closingIssuesReferences(first: 10) {
-                    nodes {
-                      number
-                    }
-                  }
-                }
-              }
-            }
-          url: ${{ github.event.pull_request.url }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/github-script@v6
-        with:
-          script: |
-            const query = `query linkedIssues($pr:URI!) {
-              resource(url:$pr) {
-                ... on PullRequest {
-                  closingIssuesReferences(first: 10) {
-                    nodes {
-                      number
-                    }
-                  }
-                }
-              }
-            }`;
-            const variables = {
-              pr: context.payload.pull_request.url,
-            }
-            const result = await github.graphql(query, variables)
-            console.log(result)
-      - name: 'Log object'
+      - uses: actions/checkout@v3
+      - name: "Label PR related issue for release"
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(context)
-            console.log(context.job)
-      - run: "echo 'output: ${{ steps.get_linked_issues.outputs }}'"
-      - run: "echo 'linked issues: ${{ steps.get_linked_issues.outputs.data }}'"
+            const script = require('.github/scripts/label_related_issue.js')
+            await script({github, context, core})

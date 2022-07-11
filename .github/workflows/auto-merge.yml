@@ -30,8 +30,8 @@ jobs:
             }`;
 
             const variables = {
-              org: process.env.ORG,
-              team: process.env.TEAM
+              org: "awslabs",
+              team: "aws-lambda-powertools-python"
             };
 
             const result = await github.graphql(query, variables);
