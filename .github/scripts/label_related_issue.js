@@ -20,6 +20,7 @@ module.exports = async ({github, context, core}) => {
 
     let variables = {pr: "https://github.com/heitorlessa/action-script-playground/pull/20"}
     const result = await github.graphql(query, variables)
+    const references = result.resource.closingIssuesReferences.nodes;
     console.dir(result,{depth:null})
 
     return pr

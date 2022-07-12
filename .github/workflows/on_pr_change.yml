@@ -1,0 +1,50 @@
+name: On PR open
+
+on:
+  workflow_run:
+    workflows: ["Record PR details"]
+    types:
+      - completed
+
+env:
+  BLOCK_LABEL: "do-not-merge"
+  BLOCK_REASON_LABEL: "need-issue"
+  IGNORE_AUTHORS: '["dependabot[bot]", "markdownify[bot]"]'
+
+jobs:
+  get_pr_details:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    uses: ./.github/workflows/reusable_export_pr_details.yml
+    with:
+      record_pr_workflow_id: ${{ github.event.workflow_run.id }}
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+  check_related_issue:
+    needs: get_pr_details
+    # Maintenance: Refactor condition to the correct env syntax later
+    # TODO:Revisit conditional as second condition is always evaluated as false
+    # if: |
+    #   needs.get_pr_details.outputs.prAction == 'opened'
+    #   && contains(fromJson('["dependabot[bot]", "markdownify[bot]"]'), needs.get_pr_details.outputs.prAuthor) != true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug outputs
+        run: |
+          echo "PR Action: ${{ needs.get_pr_details.outputs.prAction }}"
+          echo "PR Author: ${{ needs.get_pr_details.outputs.prAuthor }}"
+          echo "Outputs ${{ toJSON(needs.get_pr_details.outputs) }}"
+          echo "PR logic array: ${{ contains(${{needs.get_pr_details.outputs.prAction}}, '["opened", "edited"]') }}"
+          echo "Bot logic: ${{ contains(needs.get_pr_details.outputs.prAuthor, '["dependabot[bot]", "markdownify[bot]"]') }}"
+          echo "Bot logic env: ${{ contains(needs.get_pr_details.outputs.prAuthor, env.IGNORE_AUTHORS) }}"
+      - uses: actions/checkout@v3
+      - name: "Ensure related issue is present"
+        # if: contains('["opened", "edited"]', needs.get_pr_details.outputs.prAction)
+        uses: actions/github-script@v6
+        env:
+          PR_BODY: ${{ needs.get_pr_details.outputs.prBody }}
+          PR_NUMBER: ${{ needs.get_pr_details.outputs.prNumber }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('.github/scripts/label_missing_related_issue.js')
+            await script({github, context, core})

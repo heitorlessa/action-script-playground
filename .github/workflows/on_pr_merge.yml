@@ -3,7 +3,7 @@
 
 on:
   workflow_run:
-    workflows: ["Record PR number"]
+    workflows: ["Record PR details"]
     types:
       - completed
 
