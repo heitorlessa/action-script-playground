@@ -1,4 +1,24 @@
 module.exports = async ({github, context, core}) => {
+    const action = process.env.PR_ACTION;
+    const author = process.env.PR_AUTHOR;
+    const ignoreAuthors = process.env.IGNORE_AUTHORS || []
+    console.log(`Action: ${action}`)
+    console.log(`Author: ${author}`)
+    console.log(`Author ignore list: ${ignoreAuthors}`)
+    if (ignoreAuthors.includes(author)) {
+      core.notice("Skipping as we don't need to label bots PRs.");
+      return
+    }
+
+    if (action != "opened") {
+      core.notice("Skipping as we only label open PRs");
+      return
+    }
+    // if ((ignoreAuthors.includes(author)) || (action == "edited")) {
+      
+    //   return
+    // }
+
     const prBody = process.env.PR_BODY;
     const prNumber = process.env.PR_NUMBER;
     const blockLabel = process.env.BLOCK_LABEL;
@@ -26,3 +46,5 @@ module.exports = async ({github, context, core}) => {
         })
     }
 }
+
+
