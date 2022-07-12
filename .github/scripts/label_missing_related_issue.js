@@ -1,16 +1,23 @@
+const {
+  PR_ACTION,
+  PR_AUTHOR,
+  PR_BODY,
+  PR_NUMBER,
+  IGNORE_AUTHORS,
+  BLOCK_LABEL,
+  BLOCK_REASON_LABEL
+} = require("./constants")
+
 module.exports = async ({github, context, core}) => {
-    const action = process.env.PR_ACTION;
-    const author = process.env.PR_AUTHOR;
-    const ignoreAuthors = process.env.IGNORE_AUTHORS || []
-    console.log(`Action: ${action}`)
-    console.log(`Author: ${author}`)
-    console.log(`Author ignore list: ${ignoreAuthors}`)
-    if (ignoreAuthors.includes(author)) {
+    console.log(`Action: ${PR_ACTION}`)
+    console.log(`Author: ${PR_AUTHOR}`)
+    console.log(`Author ignore list: ${IGNORE_AUTHORS}`)
+    if (IGNORE_AUTHORS.includes(PR_AUTHOR)) {
       core.notice("Skipping as we don't need to label bots PRs.");
       return
     }
 
-    if (action != "opened") {
+    if (PR_ACTION != "opened") {
       core.notice("Skipping as we only label open PRs");
       return
     }
@@ -19,14 +26,9 @@ module.exports = async ({github, context, core}) => {
     //   return
     // }
 
-    const prBody = process.env.PR_BODY;
-    const prNumber = process.env.PR_NUMBER;
-    const blockLabel = process.env.BLOCK_LABEL;
-    const blockReasonLabel = process.env.BLOCK_REASON_LABEL;
-
     const RELATED_ISSUE_REGEX = /Issue number:[^\d\r\n]+(?<issue>\d+)/;
 
-    const isMatch = RELATED_ISSUE_REGEX.exec(prBody);
+    const isMatch = RELATED_ISSUE_REGEX.exec(PR_BODY);
     if (isMatch == null) {
         core.info(`No related issue found, maybe the author didn't use the template but there is one.`)
 
@@ -35,16 +37,14 @@ module.exports = async ({github, context, core}) => {
           owner: context.repo.owner,
           repo: context.repo.repo,
           body: msg,
-          issue_number: prNumber,
+          issue_number: PR_NUMBER,
         });
 
         return await github.rest.issues.addLabels({
-          issue_number: prNumber,
+          issue_number: PR_NUMBER,
           owner: context.repo.owner,
           repo: context.repo.repo,
-          labels: [blockLabel, blockReasonLabel]
+          labels: [BLOCK_LABEL, BLOCK_REASON_LABEL]
         })
     }
 }
-
-
