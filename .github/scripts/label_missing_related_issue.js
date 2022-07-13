@@ -21,15 +21,20 @@ module.exports = async ({github, context, core}) => {
       Body: ${PR_BODY}
     `)
 
+    core.info("IGNORE_AUTHORS");
     core.info("PR Authors type");
     core.info(typeof(PR_AUTHOR));
     core.info(`Value: ${PR_AUTHOR}`);
 
-    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
+    const IGNORE_LIST = ["dependabot[bot]", "markdownify[bot]", "heitorlessa"]
+
+    // if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
+    if (IGNORE_LIST.indexOf(PR_AUTHOR.trim()) > -1) {
       return core.notice("[IndexOf] Skipping as we don't need to label bots PRs.")
     }
 
-    if (IGNORE_AUTHORS.includes(PR_AUTHOR.trim())) {
+    // if (IGNORE_AUTHORS.includes(PR_AUTHOR.trim())) {
+    if (IGNORE_LIST.includes(PR_AUTHOR.trim())) {
       return core.notice("[Includes] Skipping as we don't need to label bots PRs.")
     }
 
