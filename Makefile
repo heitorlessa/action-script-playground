@@ -92,7 +92,7 @@ release: pr
 changelog:
 	git fetch --tags origin
 	@echo "[+] Pre-generating CHANGELOG for tag: $$(git describe --abbrev=0 --tag)"
-	docker run -v "${PWD}":/workdir quay.io/git-chglog/git-chglog $$(git describe --abbrev=0 --tag).. > CHANGELOG.md
+	docker run -v "${PWD}":/workdir quay.io/git-chglog/git-chglog > CHANGELOG.md
 
 mypy:
 	poetry run mypy --pretty aws_lambda_powertools
