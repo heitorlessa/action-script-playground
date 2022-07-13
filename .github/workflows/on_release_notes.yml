@@ -1,0 +1,30 @@
+name: Publish to PyPi
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set release notes tag
+        run: |
+          RELEASE_TAG_VERSION=${{ github.event.release.tag_name }}
+          echo "RELEASE_TAG_VERSION=${RELEASE_TAG_VERSION:1}" >> $GITHUB_ENV
+      - name: Generate changelog
+        run: make changelog
+     - name: Git setup
+        run: |
+          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
+          git config user.name "Release bot"
+          git config user.email "<>"
+
+      - name: Update Changelog in trunk
+        run: |
+          git add CHANGELOG
+          git commit -m "chore(ci): update changelog with version ${RELEASE_TAG_VERSION}"
+          git push origin master
