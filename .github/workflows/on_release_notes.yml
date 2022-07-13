@@ -19,7 +19,6 @@ jobs:
         run: make changelog
       - name: Git setup
         run: |
-          # setup the username and email. I tend to use 'GitHub Actions Bot' with no email by default
           git config user.name "Release bot"
           git config user.email "<>"
 
