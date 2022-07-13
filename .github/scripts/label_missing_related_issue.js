@@ -9,22 +9,21 @@ const {
 } = require("./constants")
 
 module.exports = async ({github, context, core}) => {
-    console.log(`Action: ${PR_ACTION}`)
-    console.log(`Author: ${PR_AUTHOR}`)
-    console.log(`Author ignore list: ${IGNORE_AUTHORS}`)
+    core.debug(`Number: ${PR_BODY}`);
+    core.debug(`Action: ${PR_ACTION}`);
+    core.debug(`Author: ${PR_AUTHOR}`);
+    core.debug(`Body: ${PR_BODY}`);
+
+    // if (IGNORE_AUTHORS.indexOf(PR_AUTHOR) > -1) {
+    //   return core.notice("Skipping as we don't need to label bots PRs.")
+    // }
     if (IGNORE_AUTHORS.includes(PR_AUTHOR)) {
-      core.notice("Skipping as we don't need to label bots PRs.");
-      return
+      return core.notice("Skipping as we don't need to label bots PRs.")
     }
 
     if (PR_ACTION != "opened") {
-      core.notice("Skipping as we only label open PRs");
-      return
+      return core.notice("Skipping as we only label open PRs")
     }
-    // if ((ignoreAuthors.includes(author)) || (action == "edited")) {
-      
-    //   return
-    // }
 
     const RELATED_ISSUE_REGEX = /Issue number:[^\d\r\n]+(?<issue>\d+)/;
 

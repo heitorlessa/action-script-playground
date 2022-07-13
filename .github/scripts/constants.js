@@ -12,7 +12,7 @@ module.exports = Object.freeze({
     /** @type {boolean} */
     "PR_IS_MERGED": process.env.PR_IS_MERGED | false,
     /** @type {string[]} */
-    "IGNORE_AUTHORS": ["dependabot[bot]", "markdownify[bot]"],
+    "IGNORE_AUTHORS": ["dependabot[bot]", "markdownify[bot]", "heitorlessa"],
     /** @type {string} */
     "BLOCK_LABEL": "do-not-merge",
     /** @type {string} */
