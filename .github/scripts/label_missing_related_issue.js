@@ -23,9 +23,9 @@ module.exports = async ({github, context, core}) => {
     core.info(`Value: ${PR_AUTHOR}`);
     core.info(`Env value: ${process.env.PR_AUTHOR}`);
 
-    // if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
-    //   return core.notice("Skipping as we don't need to label bots PRs.")
-    // }
+    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
+      return core.notice("Skipping as we don't need to label bots PRs.")
+    }
     // if (IGNORE_AUTHORS.includes(PR_AUTHOR)) {
     //   return core.notice("Skipping as we don't need to label bots PRs.")
     // }
