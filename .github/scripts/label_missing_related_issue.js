@@ -11,7 +11,7 @@ const {
 } = require("./constants")
 
 module.exports = async ({github, context, core}) => {
-    core.info(`[Debug]
+    core.debug(`[Debug]
       Action: ${PR_ACTION}
       Author: ${PR_AUTHOR}
       Number: ${PR_NUMBER}
@@ -21,20 +21,8 @@ module.exports = async ({github, context, core}) => {
       Body: ${PR_BODY}
     `)
 
-    core.info("PR Authors type");
-    core.info(typeof(PR_AUTHOR));
-    core.info(PR_AUTHOR);
-
-    // const IGNORE_LIST = ["dependabot[bot]", "markdownify[bot]", "heitorlessa"]
-    
-    // if (IGNORE_LIST.indexOf(PR_AUTHOR.trim()) > -1) {
-      // if (IGNORE_AUTHORS.indexOf("heitorlessa") > -1) { // WORKS
-    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.replace(/"/g, '')) > -1) {
+    if (IGNORE_AUTHORS.includes(PR_AUTHOR) > -1) {
       return core.notice("[IndexOf] Skipping as we don't need to label bots PRs.")
-    }
-
-    if (IGNORE_AUTHORS.includes(PR_AUTHOR.replace(/"/g, ''))) {
-      return core.notice("[Includes] Skipping as we don't need to label bots PRs.")
     }
 
     if (PR_ACTION != "opened") {
