@@ -14,12 +14,12 @@ module.exports = async ({github, context, core}) => {
     core.debug(`Author: ${PR_AUTHOR}`);
     core.debug(`Body: ${PR_BODY}`);
 
-    // if (IGNORE_AUTHORS.indexOf(PR_AUTHOR) > -1) {
-    //   return core.notice("Skipping as we don't need to label bots PRs.")
-    // }
-    if (IGNORE_AUTHORS.includes(PR_AUTHOR)) {
+    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR) > -1) {
       return core.notice("Skipping as we don't need to label bots PRs.")
     }
+    // if (IGNORE_AUTHORS.includes(PR_AUTHOR)) {
+    //   return core.notice("Skipping as we don't need to label bots PRs.")
+    // }
 
     if (PR_ACTION != "opened") {
       return core.notice("Skipping as we only label open PRs")
