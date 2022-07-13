@@ -2,12 +2,12 @@
 ## Unreleased
 
 
-<a name="v1.0.4"></a>
-## [v1.0.4] - 2022-07-13
+<a name="v1.0.6"></a>
+## [v1.0.6] - 2022-07-13
 ### Maintenance
 
-* **ci:** add interactive debugging
+* **ci:** add debugging to list tags and refs
 
 
-[Unreleased]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.4...HEAD
-[v1.0.4]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.3...v1.0.4
+[Unreleased]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.6...HEAD
+[v1.0.6]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.5...v1.0.6
