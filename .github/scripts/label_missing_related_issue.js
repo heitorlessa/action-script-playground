@@ -16,8 +16,10 @@ module.exports = async ({github, context, core}) => {
 
     core.info("IGNORE Authors type");
     core.info(typeof(IGNORE_AUTHORS));
+    core.info(`Value: ${IGNORE_AUTHORS}`);
     core.info("PR Authors type");
     core.info(typeof(PR_AUTHOR));
+    core.info(`Value: ${PR_AUTHOR}`);
 
     if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
       return core.notice("Skipping as we don't need to label bots PRs.")
