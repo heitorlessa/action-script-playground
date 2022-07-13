@@ -1,33 +1,35 @@
+const {
+  PR_ACTION,
+  PR_BODY,
+  PR_NUMBER,
+  IGNORE_AUTHORS,
+  BLOCK_LABEL,
+  BLOCK_REASON_LABEL,
+  PR_TITLE,
+  PR_IS_MERGED,
+  PR_AUTHOR
+} = require("./constants")
+
 module.exports = async ({github, context, core}) => {
-    const {
-      PR_ACTION,
-      PR_BODY,
-      PR_NUMBER,
-      IGNORE_AUTHORS,
-      BLOCK_LABEL,
-      BLOCK_REASON_LABEL,
-      PR_TITLE,
-      PR_IS_MERGED
-    } = require("./constants")
+    core.info(`[Debug]
+      Action: ${PR_ACTION}
+      Author: ${PR_AUTHOR}
+      Number: ${PR_NUMBER}
+      Title: ${PR_TITLE}
+      Is it merged: ${PR_IS_MERGED}
+      Authors Ignore list: ${IGNORE_AUTHORS}      
+      Body: ${PR_BODY}
+    `)
 
-    core.info(`Action: ${PR_ACTION}`);
-    // core.info(`Author: ${PR_AUTHOR}`);
-    core.info(`Author: ${process.env.PR_AUTHOR}`);
-    core.info(`Number: ${PR_NUMBER}`);
-    core.info(`Title: ${PR_TITLE}`);
-    core.info(`Is it merged: ${PR_IS_MERGED}`);
-    core.info(`Body: ${PR_BODY}`);
+    core.info("PR Authors type");
+    core.info(typeof(PR_AUTHOR));
+    core.info(`Value: ${PR_AUTHOR}`);
 
-    // core.info("PR Authors type");
-    // core.info(typeof(PR_AUTHOR));
-    // core.info(`Value: ${PR_AUTHOR}`);
-    // core.info(`Env value: ${process.env.PR_AUTHOR}`);
-
-    if (IGNORE_AUTHORS.indexOf(process.env.PR_AUTHOR) > -1) {
+    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.trim()) > -1) {
       return core.notice("[IndexOf] Skipping as we don't need to label bots PRs.")
     }
 
-    if (IGNORE_AUTHORS.includes(process.env.PR_AUTHOR)) {
+    if (IGNORE_AUTHORS.includes(PR_AUTHOR.trim())) {
       return core.notice("[Includes] Skipping as we don't need to label bots PRs.")
     }
 
