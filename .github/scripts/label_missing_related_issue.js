@@ -6,13 +6,17 @@ module.exports = async ({github, context, core}) => {
       PR_NUMBER,
       IGNORE_AUTHORS,
       BLOCK_LABEL,
-      BLOCK_REASON_LABEL
+      BLOCK_REASON_LABEL,
+      PR_TITLE,
+      PR_IS_MERGED
     } = require("./constants")
 
-    core.debug(`Number: ${PR_NUMBER}`);
-    core.debug(`Action: ${PR_ACTION}`);
-    core.debug(`Author: ${PR_AUTHOR}`);
-    core.debug(`Body: ${PR_BODY}`);
+    core.info(`Action: ${PR_ACTION}`);
+    core.info(`Author: ${PR_AUTHOR}`);
+    core.info(`Number: ${PR_NUMBER}`);
+    core.info(`Title: ${PR_TITLE}`);
+    core.info(`Is it merged: ${PR_IS_MERGED}`);
+    core.info(`Body: ${PR_BODY}`);
 
     core.info("PR Authors type");
     core.info(typeof(PR_AUTHOR));

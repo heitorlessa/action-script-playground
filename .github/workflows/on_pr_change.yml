@@ -28,6 +28,8 @@ jobs:
           PR_AUTHOR: ${{ needs.get_pr_details.outputs.prAuthor }}
           PR_BODY: ${{ needs.get_pr_details.outputs.prBody }}
           PR_NUMBER: ${{ needs.get_pr_details.outputs.prNumber }}
+          PR_TITLE: ${{ needs.get_pr_details.outputs.prTitle }}
+          PR_IS_MERGED: ${{ needs.get_pr_details.outputs.prIsMerged }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
