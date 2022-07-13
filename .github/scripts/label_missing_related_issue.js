@@ -1,15 +1,15 @@
-const {
-  PR_ACTION,
-  PR_AUTHOR,
-  PR_BODY,
-  PR_NUMBER,
-  IGNORE_AUTHORS,
-  BLOCK_LABEL,
-  BLOCK_REASON_LABEL
-} = require("./constants")
-
 module.exports = async ({github, context, core}) => {
-    core.debug(`Number: ${PR_BODY}`);
+    const {
+      PR_ACTION,
+      PR_AUTHOR,
+      PR_BODY,
+      PR_NUMBER,
+      IGNORE_AUTHORS,
+      BLOCK_LABEL,
+      BLOCK_REASON_LABEL
+    } = require("./constants")
+
+    core.debug(`Number: ${PR_NUMBER}`);
     core.debug(`Action: ${PR_ACTION}`);
     core.debug(`Author: ${PR_AUTHOR}`);
     core.debug(`Body: ${PR_BODY}`);
