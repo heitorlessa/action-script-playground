@@ -25,17 +25,15 @@ module.exports = async ({github, context, core}) => {
     core.info(typeof(PR_AUTHOR));
     core.info(PR_AUTHOR);
 
-    let newAuthor = PR_AUTHOR.replace(/[^\w ]/, '')
-
     // const IGNORE_LIST = ["dependabot[bot]", "markdownify[bot]", "heitorlessa"]
-
+    
     // if (IGNORE_LIST.indexOf(PR_AUTHOR.trim()) > -1) {
       // if (IGNORE_AUTHORS.indexOf("heitorlessa") > -1) { // WORKS
-    if (IGNORE_AUTHORS.indexOf(newAuthor) > -1) {
+    if (IGNORE_AUTHORS.indexOf(PR_AUTHOR.replace(/"/g, '')) > -1) {
       return core.notice("[IndexOf] Skipping as we don't need to label bots PRs.")
     }
 
-    if (IGNORE_AUTHORS.includes(PR_AUTHOR.trim())) {
+    if (IGNORE_AUTHORS.includes(PR_AUTHOR.replace(/"/g, ''))) {
       return core.notice("[Includes] Skipping as we don't need to label bots PRs.")
     }
 
