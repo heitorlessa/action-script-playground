@@ -29,6 +29,3 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore(ci): update changelog with latest changes"
           git push origin HEAD:refs/heads/develop
-      - name: Setup debugging session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3

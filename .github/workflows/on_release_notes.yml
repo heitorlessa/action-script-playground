@@ -28,3 +28,6 @@ jobs:
           echo "RELEASE_TAG_VERSION: ${RELEASE_TAG_VERSION}"
       - name: Rebuild changelog
         uses: ./.github/workflows/reusable_publish_changelog.yml
+      - name: Setup debugging session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
