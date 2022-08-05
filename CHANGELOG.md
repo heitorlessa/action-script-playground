@@ -1,6 +1,10 @@
 <a name="unreleased"></a>
 ## Unreleased
 
+### Maintenance
+
+* **ci:** update changelog with latest changes
+
 
 <a name="v1.0.6"></a>
 ## [v1.0.6] - 2022-07-13
