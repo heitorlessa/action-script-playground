@@ -1,10 +1,6 @@
 <a name="unreleased"></a>
 ## Unreleased
 
-### Bug Fixes
-
-* reusable workflows can run as a job only
-
 
 <a name="v1.0.6"></a>
 ## [v1.0.6] - 2022-07-13
