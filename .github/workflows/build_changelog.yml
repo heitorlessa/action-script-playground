@@ -14,7 +14,7 @@ jobs:
     env:
       RELEASE_VERSION: ${{ github.event.release.tag_name || inputs.version_to_publish }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set release notes tag
@@ -24,8 +24,7 @@ jobs:
       - name: Output release tag version
         run: |
           echo "RELEASE_TAG_VERSION: ${RELEASE_TAG_VERSION}"
-      - name: Rebuild changelog
-        uses: ./.github/workflows/reusable_publish_changelog.yml
-      - name: Setup debugging session
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
+
+  changelog:
+    needs: release
+    uses: ./.github/workflows/reusable_publish_changelog.yml
