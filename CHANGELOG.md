@@ -1,9 +1,9 @@
 <a name="unreleased"></a>
 ## Unreleased
 
-### Bug Fixes
+### Maintenance
 
-* reusable workflows can run as a job only
+* **ci:** update changelog with latest changes
 
 
 <a name="v1.0.6"></a>
