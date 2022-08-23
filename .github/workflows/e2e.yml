@@ -1,0 +1,23 @@
+name: End-to-end tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [labeled]
+
+# if: ${{ github.event.label.name == 'label_name' }}
+# if: github.repository == 'octo-org/octo-repo-prod'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v3
+      - name: Dump event
+        run: echo "${github}"
+      - name: Dump event (JSON)
+        run: echo "${{ toJSON(github) }}"
