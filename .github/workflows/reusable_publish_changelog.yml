@@ -34,4 +34,4 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore(ci): update changelog with latest changes"
           git pull
-          git push origin HEAD:refs/heads/develop
+          git push origin HEAD:refs/heads/master
