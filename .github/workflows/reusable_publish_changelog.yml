@@ -36,5 +36,5 @@ jobs:
         run: |
           git add CHANGELOG.md
           git commit -m "chore(ci): update changelog with latest changes"
-          git pull
+          git pull origin $BRANCH
           git push origin HEAD:refs/heads/$BRANCH
