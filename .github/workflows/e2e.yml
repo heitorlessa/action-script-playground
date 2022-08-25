@@ -6,7 +6,7 @@ on:
     types: [labeled]
 
 # if: ${{ github.event.label.name == 'label_name' }}
-# if: github.repository == 'octo-org/octo-repo-prod'
+# if: github.event.action == 'labeled'
 
 jobs:
   run:
