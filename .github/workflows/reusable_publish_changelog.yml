@@ -6,6 +6,9 @@ on:
 permissions:
   contents: write
 
+env:
+  BRANCH: master
+
 jobs:
   publish_changelog:
     # Force Github action to run only a single job at a time (based on the group name)
@@ -24,7 +27,7 @@ jobs:
           git config user.email "aws-devax-open-source@amazon.com"
           git config pull.rebase true
           git config remote.origin.url >&- || git remote add origin https://github.com/$origin
-          git pull --rebase
+          git pull --rebase origin $BRANCH
       - name: "Generate latest changelog"
         run: make changelog
       - name: Pause
@@ -34,4 +37,4 @@ jobs:
           git add CHANGELOG.md
           git commit -m "chore(ci): update changelog with latest changes"
           git pull
-          git push origin HEAD:refs/heads/master
+          git push origin HEAD:refs/heads/$BRANCH
