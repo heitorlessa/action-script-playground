@@ -31,6 +31,7 @@ jobs:
         run: sleep 20
       - name: Update Changelog in trunk
         run: |
+          git pull
           git add CHANGELOG.md
           git commit -m "chore(ci): update changelog with latest changes"
           git push origin HEAD:refs/heads/develop
