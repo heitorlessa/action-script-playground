@@ -14,7 +14,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: List labels
@@ -22,6 +22,7 @@ jobs:
         env:
           PR_NUMBER: ${{ inputs.issue_number }}
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require('.github/workflows/comment_on_large_pr.js')
+            const script = require('.github/scripts/comment_on_large_pr.js')
             await script({github, context, core})
