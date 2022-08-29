@@ -6,6 +6,6 @@ module.exports = async ({github, context, core}) => {
       issue_number: process.env.PR_NUMBER,
     })
 
-    console.log(labels)
+    console.log(labels.data)
     return labels
 }
