@@ -2,6 +2,59 @@
 ## Unreleased
 
 
+<a name="v1.0.10"></a>
+## [v1.0.10] - 2022-08-25
+### Bug Fixes
+
+* **ci:** explicit branch so it also works in detached mode pt2
+
+
+<a name="v1.0.9"></a>
+## [v1.0.9] - 2022-08-25
+### Bug Fixes
+
+* **ci:** explicit branch so it also works in detached mode
+
+
+<a name="v1.0.8"></a>
+## [v1.0.8] - 2022-08-25
+### Bug Fixes
+
+* **ci:** reusable workflows can only run as separate jobs
+
+
+<a name="v1.0.7"></a>
+## [v1.0.7] - 2022-08-25
+### Bug Fixes
+
+* reusable workflows can run as a job only
+* downgrade actions to checkout[@v2](https://github.com/v2)
+* **ci:** gh event syntax
+
+### Maintenance
+
+* add changelog workflow standalone
+* revert back to master branch
+* pull order to prevent dirty stage
+* pull before pushing changelog
+* add origin remote if not available
+* reset actions
+* add label event test
+* add reusable changelog
+* move debugging session to caller
+* add rebase before pushing
+* move head ref to master
+* **ci:** update changelog with latest changes
+* **ci:** update changelog with latest changes
+* **ci:** update changelog with latest changes
+* **ci:** update changelog with latest changes
+* **ci:** test gh exp operators 2
+* **ci:** test gh exp operators
+* **ci:** disable debugging
+* **ci:** allow all versions to be picked up
+* **ci:** update changelog with version 1.0.6
+
+
 <a name="v1.0.6"></a>
 ## [v1.0.6] - 2022-07-13
 ### Maintenance
@@ -132,7 +185,11 @@
 * add action post-release script
 
 
-[Unreleased]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.6...HEAD
+[Unreleased]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.10...HEAD
+[v1.0.10]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.9...v1.0.10
+[v1.0.9]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.8...v1.0.9
+[v1.0.8]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.7...v1.0.8
+[v1.0.7]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.6...v1.0.7
 [v1.0.6]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.5...v1.0.6
 [v1.0.5]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.4...v1.0.5
 [v1.0.4]: https://github.com/awslabs/aws-lambda-powertools-python/compare/v1.0.3...v1.0.4
