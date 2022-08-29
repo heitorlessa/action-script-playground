@@ -3,25 +3,25 @@ name: Kickoff action script
 on:
   workflow_dispatch:
     inputs:
-      release:
-        description: release version
-        default: 'v1.24.0'
+      issue_number:
+        description: issue number to list labels for
         required: true
 
 jobs:
-  release:
+  playground:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Set release notes tag
-      run: |
-        RELEASE_TAG_VERSION=${{ github.event.inputs.release }}
-        echo "RELEASE_TAG_VERSION=${RELEASE_TAG_VERSION:1}" >> $GITHUB_ENV
-    - name: Close staged release issues
-      uses: actions/github-script@v5
-      with:
-        script: |
-          const post_release = require('.github/workflows/post_release.js')
-          await post_release({github, context, core})
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: List labels
+        uses: actions/github-script@v5
+        env:
+          PR_NUMBER: ${{ inputs.issue_number }}
+        with:
+          script: |
+            const script = require('.github/workflows/comment_on_large_pr.js')
+            await script({github, context, core})
